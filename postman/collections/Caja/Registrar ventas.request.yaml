@@ -1,0 +1,5 @@
+$kind: http-request
+name: Registrar ventas
+url: http://localhost:8000/api/caja/ventas
+method: GET
+order: 2881599197869452

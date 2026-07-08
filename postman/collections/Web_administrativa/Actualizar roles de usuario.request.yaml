@@ -1,0 +1,8 @@
+$kind: http-request
+name: Actualizar roles de usuario
+url: http://localhost:8000/api/web/usuarios/4/roles
+method: PATCH
+body:
+  type: json
+  content: "{\r\n  \"role_ids\": [1]\r\n}"
+order: 4432855545320447

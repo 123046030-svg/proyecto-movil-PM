@@ -1,0 +1,17 @@
+$kind: http-request
+url: http://localhost:8000/api/web/usuarios
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"nombre\": \"Mesero Principal Wisky\",\r
+
+    \  \"username\": \"Mesero test\",\r
+
+    \  \"password\": \"12345\",\r
+
+    \  \"role_ids\": [2]\r
+
+    }"
+order: 4280691498531930

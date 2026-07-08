@@ -1,0 +1,13 @@
+$kind: http-request
+url: http://localhost:8000/api/caja/pagos
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"mesa\": 2,\r
+
+    \  \"metodo_pago\": \"Efectivo\"\r
+
+    }"
+order: 2756624890511994

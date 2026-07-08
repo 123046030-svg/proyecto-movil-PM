@@ -1,0 +1,5 @@
+$kind: http-request
+name: Obtener estadisticas
+url: http://localhost:8000/api/web/estadisticas
+method: GET
+order: 4465831746252622

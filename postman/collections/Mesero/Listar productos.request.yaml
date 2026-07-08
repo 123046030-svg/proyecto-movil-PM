@@ -1,0 +1,5 @@
+$kind: http-request
+name: Listar productos
+url: http://localhost:8000/api/mesero/productos
+method: GET
+order: 3155802133505603

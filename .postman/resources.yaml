@@ -1,0 +1,8 @@
+workspace:
+  id: dcff4465-5b86-43b4-8077-6fb7a3d154ce
+cloudResources:
+  collections:
+    ../postman/collections/Caja: 52736898-c63b6848-0469-49b5-ad85-448977916e72
+    ../postman/collections/Cocina: 52736898-cf427109-fff1-4323-b18c-eac3a95f2343
+    ../postman/collections/Mesero: 52736898-9d0e35ea-a365-4ba2-a70c-c7f17c6c3026
+    ../postman/collections/Web_administrativa: 52736898-92ffd32e-ccde-40b3-8930-b0d01e5989ee

@@ -1,0 +1,38 @@
+$kind: http-request
+name: Levantar pedidos
+url: http://localhost:8000/api/mesero/pedidos
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"mesa\": 2,\r
+
+    \  \"mesero\": \"Mesero Principal\",\r
+
+    \  \"productos\": [\r
+
+    \    {\r
+
+    \      \"producto_id\": 1,\r
+
+    \      \"cantidad\": 2,\r
+
+    \      \"observaciones\": \"Sin cebolla\"\r
+
+    \    },\r
+
+    \    {\r
+
+    \      \"producto_id\": 5,\r
+
+    \      \"cantidad\": 2,\r
+
+    \      \"observaciones\": \"Bien frío\"\r
+
+    \    }\r
+
+    \  ]\r
+
+    }"
+order: 4066775740970366

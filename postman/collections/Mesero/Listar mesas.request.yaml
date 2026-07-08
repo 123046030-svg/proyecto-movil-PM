@@ -1,0 +1,5 @@
+$kind: http-request
+name: Listar mesas
+url: http://localhost:8000/api/mesero/mesas
+method: GET
+order: 1783534814535

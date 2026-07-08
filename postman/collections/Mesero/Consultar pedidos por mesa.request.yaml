@@ -1,0 +1,4 @@
+$kind: http-request
+url: http://localhost:8000/api/mesero/pedidos/mesa/2
+method: GET
+order: 4440830450058787

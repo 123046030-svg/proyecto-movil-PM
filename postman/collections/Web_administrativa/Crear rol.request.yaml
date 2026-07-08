@@ -1,0 +1,13 @@
+$kind: http-request
+url: http://localhost:8000/api/web/roles
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \  \"nombre\": \"Supervisor\",\r
+
+    \  \"descripcion\": \"Rol para supervisar operaciones del restaurante\"\r
+
+    }"
+order: 2825868357388586

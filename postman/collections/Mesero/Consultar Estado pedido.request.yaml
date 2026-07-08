@@ -1,0 +1,4 @@
+$kind: http-request
+url: http://localhost:8000/api/mesero/pedidos/6/estado
+method: GET
+order: 4098837366652965

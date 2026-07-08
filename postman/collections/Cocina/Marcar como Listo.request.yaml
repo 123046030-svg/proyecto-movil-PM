@@ -1,0 +1,8 @@
+$kind: http-request
+description: ""
+url: http://localhost:8000/api/cocina/pedidos/7/listo
+method: PATCH
+body:
+  type: json
+  content: ""
+order: 2680256799812927

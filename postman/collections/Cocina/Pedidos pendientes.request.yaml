@@ -1,0 +1,5 @@
+$kind: http-request
+name: Pedidos pendientes
+url: http://localhost:8000/api/cocina/pedidos/pendientes
+method: GET
+order: 1783534292664

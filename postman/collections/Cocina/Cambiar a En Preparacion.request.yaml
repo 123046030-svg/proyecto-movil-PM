@@ -1,0 +1,5 @@
+$kind: http-request
+name: Cambiar a En Preparacion
+url: http://localhost:8000/api/cocina/pedidos/3/en-preparacion
+method: PATCH
+order: 2528444393540925

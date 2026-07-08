@@ -1,0 +1,5 @@
+$kind: http-request
+name: Consultar cuenta
+url: http://localhost:8000/api/caja/cuentas/3
+method: GET
+order: 1783535886781
