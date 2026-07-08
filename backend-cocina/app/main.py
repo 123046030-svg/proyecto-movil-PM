@@ -15,6 +15,7 @@ from app.routes.cocina import router as cocina_router
 from app.routes.mesero import router as mesero_router
 from app.routes.caja import router as caja_router
 from app.routes.admin_web import router as admin_web_router
+from app.routes.auth import router as auth_router
 
 
 Base.metadata.create_all(bind=engine)
@@ -202,3 +203,4 @@ app.include_router(mesero_router)
 app.include_router(cocina_router)
 app.include_router(caja_router)
 app.include_router(admin_web_router)
+app.include_router(auth_router)

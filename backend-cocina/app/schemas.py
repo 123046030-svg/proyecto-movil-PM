@@ -176,3 +176,23 @@ class EstadisticasOut(BaseModel):
     total_productos: int
     mesas_ocupadas: int
     total_usuarios: int
+    
+# --------------------
+# Auth / Login
+# --------------------
+
+class LoginIn(BaseModel):
+    username: str
+    password: str
+
+
+class UsuarioLoginOut(BaseModel):
+    id: int
+    nombre: str
+    username: str
+    roles: list[str]
+
+
+class LoginOut(BaseModel):
+    mensaje: str
+    usuario: UsuarioLoginOut
