@@ -1,10 +1,11 @@
 from datetime import datetime
-from pydantic import BaseModel
+
+from pydantic import BaseModel, Field
 
 
-# --------------------
-# Productos / Mesas
-# --------------------
+# ==========================================================
+# PRODUCTOS / MESAS
+# ==========================================================
 
 class MesaOut(BaseModel):
     id: int
@@ -20,9 +21,9 @@ class ProductoCatalogoOut(BaseModel):
     disponible: bool
 
 
-# --------------------
-# Pedidos
-# --------------------
+# ==========================================================
+# PEDIDOS
+# ==========================================================
 
 class ProductoOut(BaseModel):
     nombre: str
@@ -61,9 +62,9 @@ class CambioEstadoOut(BaseModel):
     estado: str
 
 
-# --------------------
-# Mesero
-# --------------------
+# ==========================================================
+# MESERO
+# ==========================================================
 
 class PedidoItemIn(BaseModel):
     producto_id: int
@@ -91,9 +92,9 @@ class PedidoEstadoOut(BaseModel):
     estado: str
 
 
-# --------------------
-# Caja
-# --------------------
+# ==========================================================
+# CAJA
+# ==========================================================
 
 class CuentaPedidoOut(BaseModel):
     id_pedido: int
@@ -131,9 +132,9 @@ class VentaOut(BaseModel):
     pedido_ids: str
 
 
-# --------------------
-# Web Admin
-# --------------------
+# ==========================================================
+# WEB ADMIN
+# ==========================================================
 
 class RolCreateIn(BaseModel):
     nombre: str
@@ -176,10 +177,11 @@ class EstadisticasOut(BaseModel):
     total_productos: int
     mesas_ocupadas: int
     total_usuarios: int
-    
-# --------------------
-# Auth / Login
-# --------------------
+
+
+# ==========================================================
+# AUTH / LOGIN
+# ==========================================================
 
 class LoginIn(BaseModel):
     username: str
@@ -194,5 +196,30 @@ class UsuarioLoginOut(BaseModel):
 
 
 class LoginOut(BaseModel):
+    mensaje: str
+    usuario: UsuarioLoginOut
+
+
+# ==========================================================
+# REGISTRO
+# ==========================================================
+
+class RegistroIn(BaseModel):
+    nombre: str
+
+    # VALIDACIÓN DESDE FASTAPI
+    # No acepta menores de 18.
+    edad: int = Field(
+        ...,
+        ge=18,
+        le=100
+    )
+
+    username: str
+    password: str
+    rol: str
+
+
+class RegistroOut(BaseModel):
     mensaje: str
     usuario: UsuarioLoginOut

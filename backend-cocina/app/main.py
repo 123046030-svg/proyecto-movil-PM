@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.routes.reportes import router as reportes_router
 
 from app.database import Base, engine, SessionLocal
 from app.models import (
@@ -21,54 +22,102 @@ from app.routes.auth import router as auth_router
 Base.metadata.create_all(bind=engine)
 
 
-def insertar_datos_prueba():
+def obtener_o_crear_rol(
+    db,
+    nombre: str,
+    descripcion: str
+):
+    rol = db.query(Rol).filter(Rol.nombre == nombre).first()
+
+    if not rol:
+        rol = Rol(
+            nombre=nombre,
+            descripcion=descripcion
+        )
+        db.add(rol)
+        db.flush()
+    else:
+        rol.descripcion = descripcion
+
+    return rol
+
+
+def insertar_datos_iniciales():
     db = SessionLocal()
 
     try:
-        if db.query(Rol).count() == 0:
-            rol_admin = Rol(nombre="Administrador", descripcion="Acceso a gestión web")
-            rol_mesero = Rol(nombre="Mesero", descripcion="Puede levantar pedidos")
-            rol_cocina = Rol(nombre="Cocina", descripcion="Puede preparar pedidos")
-            rol_caja = Rol(nombre="Caja", descripcion="Puede cobrar cuentas")
+        roles = {
+            "Administrador": obtener_o_crear_rol(
+                db,
+                "Administrador",
+                "Acceso completo a la administración"
+            ),
+            "Mesero": obtener_o_crear_rol(
+                db,
+                "Mesero",
+                "Puede consultar mesas y levantar pedidos"
+            ),
+            "Cocina": obtener_o_crear_rol(
+                db,
+                "Cocina",
+                "Puede preparar y actualizar pedidos"
+            ),
+            "Caja": obtener_o_crear_rol(
+                db,
+                "Caja",
+                "Puede consultar cuentas y registrar pagos"
+            )
+        }
 
-            db.add_all([rol_admin, rol_mesero, rol_cocina, rol_caja])
-            db.commit()
+        db.commit()
 
-        if db.query(Usuario).count() == 0:
-            admin = db.query(Rol).filter(Rol.nombre == "Administrador").first()
-            mesero = db.query(Rol).filter(Rol.nombre == "Mesero").first()
-            cocina = db.query(Rol).filter(Rol.nombre == "Cocina").first()
-            caja = db.query(Rol).filter(Rol.nombre == "Caja").first()
+        # Eliminar únicamente las cuentas de demostración anteriores.
+        usuarios_prueba = [
+            ("carlos", "Carlos Pérez"),
+            ("cocina", "Empleado Cocina"),
+            ("caja", "Empleado Caja")
+        ]
 
-            usuarios = [
-                Usuario(
-                    nombre="Administrador Principal",
-                    username="admin",
-                    password="123456",
-                    roles=[admin]
-                ),
-                Usuario(
-                    nombre="Carlos Pérez",
-                    username="carlos",
-                    password="123456",
-                    roles=[mesero]
-                ),
-                Usuario(
-                    nombre="Empleado Cocina",
-                    username="cocina",
-                    password="123456",
-                    roles=[cocina]
-                ),
-                Usuario(
-                    nombre="Empleado Caja",
-                    username="caja",
-                    password="123456",
-                    roles=[caja]
+        for username, nombre in usuarios_prueba:
+            usuario_prueba = (
+                db.query(Usuario)
+                .filter(
+                    Usuario.username == username,
+                    Usuario.nombre == nombre
                 )
-            ]
+                .first()
+            )
 
-            db.add_all(usuarios)
-            db.commit()
+            if usuario_prueba:
+                usuario_prueba.roles = []
+                db.flush()
+                db.delete(usuario_prueba)
+
+        db.commit()
+
+        # Crear o corregir la cuenta reservada del administrador.
+        admin = (
+            db.query(Usuario)
+            .filter(Usuario.username == "admin")
+            .first()
+        )
+
+        if not admin:
+            admin = Usuario(
+                nombre="Regina",
+                username="admin",
+                password="123456",
+                activo=True,
+                roles=[roles["Administrador"]]
+            )
+            db.add(admin)
+        else:
+            admin.nombre = "Regina"
+            admin.password = "123456"
+            admin.activo = True
+            admin.roles = [roles["Administrador"]]
+
+        db.commit()
 
         if db.query(Mesa).count() == 0:
             mesas = [
@@ -87,14 +136,54 @@ def insertar_datos_prueba():
 
         if db.query(Producto).count() == 0:
             productos = [
-                Producto(nombre="Hamburguesa", precio=85, categoria="Comida", disponible=True),
-                Producto(nombre="Papas fritas", precio=45, categoria="Comida", disponible=True),
-                Producto(nombre="Tacos", precio=20, categoria="Comida", disponible=True),
-                Producto(nombre="Ensalada", precio=70, categoria="Comida", disponible=True),
-                Producto(nombre="Refresco", precio=28, categoria="Bebida", disponible=True),
-                Producto(nombre="Agua de limón", precio=25, categoria="Bebida", disponible=True),
-                Producto(nombre="Café", precio=35, categoria="Bebida", disponible=True),
-                Producto(nombre="Pastel de chocolate", precio=55, categoria="Postre", disponible=True)
+                Producto(
+                    nombre="Hamburguesa",
+                    precio=85,
+                    categoria="Comida",
+                    disponible=True
+                ),
+                Producto(
+                    nombre="Papas fritas",
+                    precio=45,
+                    categoria="Comida",
+                    disponible=True
+                ),
+                Producto(
+                    nombre="Tacos",
+                    precio=20,
+                    categoria="Comida",
+                    disponible=True
+                ),
+                Producto(
+                    nombre="Ensalada",
+                    precio=70,
+                    categoria="Comida",
+                    disponible=True
+                ),
+                Producto(
+                    nombre="Refresco",
+                    precio=28,
+                    categoria="Bebida",
+                    disponible=True
+                ),
+                Producto(
+                    nombre="Agua de limón",
+                    precio=25,
+                    categoria="Bebida",
+                    disponible=True
+                ),
+                Producto(
+                    nombre="Café",
+                    precio=35,
+                    categoria="Bebida",
+                    disponible=True
+                ),
+                Producto(
+                    nombre="Pastel de chocolate",
+                    precio=55,
+                    categoria="Postre",
+                    disponible=True
+                )
             ]
 
             db.add_all(productos)
@@ -151,8 +240,17 @@ def insertar_datos_prueba():
                 )
             ]
 
-            mesa4 = db.query(Mesa).filter(Mesa.numero == 4).first()
-            mesa7 = db.query(Mesa).filter(Mesa.numero == 7).first()
+            mesa4 = (
+                db.query(Mesa)
+                .filter(Mesa.numero == 4)
+                .first()
+            )
+
+            mesa7 = (
+                db.query(Mesa)
+                .filter(Mesa.numero == 7)
+                .first()
+            )
 
             if mesa4:
                 mesa4.estado = "Ocupada"
@@ -167,20 +265,23 @@ def insertar_datos_prueba():
         db.close()
 
 
-insertar_datos_prueba()
+insertar_datos_iniciales()
 
 
 app = FastAPI(
-    title="API Restaurante - Proyecto Móvil",
-    description="API para módulos de Mesero, Cocina, Caja y Web Administrativa",
-    version="1.0.0"
+    title="API CoffeReg",
+    description=(
+        "API para los módulos de Mesero, Cocina, "
+        "Caja y Administración"
+    ),
+    version="1.1.0"
 )
 
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -189,18 +290,19 @@ app.add_middleware(
 @app.get("/")
 def inicio():
     return {
-        "mensaje": "API del restaurante funcionando correctamente",
+        "mensaje": "API de CoffeReg funcionando correctamente",
         "modulos": [
             "Mesero",
             "Cocina",
             "Caja",
-            "Web Administrativa"
+            "Administración"
         ]
     }
 
 
+app.include_router(auth_router)
 app.include_router(mesero_router)
 app.include_router(cocina_router)
 app.include_router(caja_router)
 app.include_router(admin_web_router)
-app.include_router(auth_router)
+app.include_router(reportes_router)

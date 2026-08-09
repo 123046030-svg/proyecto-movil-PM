@@ -1,17 +1,18 @@
 $kind: http-request
+name: Crear usuario
 url: http://localhost:8000/api/web/usuarios
 method: POST
 body:
   type: json
   content: "{\r
 
-    \  \"nombre\": \"Mesero Principal Wisky\",\r
+    \  \"nombre\": \"Alonso\",\r
 
-    \  \"username\": \"Mesero test\",\r
+    \  \"username\": \"Alonso\",\r
 
     \  \"password\": \"12345\",\r
 
-    \  \"role_ids\": [2]\r
+    \  \"role_ids\": [3]\r
 
     }"
 order: 4280691498531930
