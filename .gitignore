@@ -1,1 +1,14 @@
 postman/
+
+backend-cocina/venv/
+backend-cocina/__pycache__/
+backend-cocina/**/*.pyc
+restaurante-movil/node_modules/
+restaurante-movil/.expo/
+restaurante-movil/dist/
+restaurante-movil/android/
+restaurante-movil/ios/
+restaurante-movil/eas-inspect-archive/
+restaurante-movil/eas-inspect-prebuild/
+restaurante-movil/eas-inspect-*/
+restaurante-movil.zip

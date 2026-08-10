@@ -29,6 +29,9 @@ export default function RegistroScreen() {
   const [nombre, setNombre] =
     useState('');
 
+  const [edad, setEdad] =
+    useState('');
+
   const [username, setUsername] =
     useState('');
 
@@ -51,6 +54,7 @@ export default function RegistroScreen() {
   const registrar = async () => {
     if (
       !nombre.trim() ||
+      !edad.trim() ||
       !username.trim() ||
       !password.trim() ||
       !confirmarPassword.trim()
@@ -58,6 +62,33 @@ export default function RegistroScreen() {
       await notificar(
         'Campos obligatorios',
         'Completa todos los campos.'
+      );
+
+      return;
+    }
+
+    const edadNumero = Number(edad);
+
+    if (
+      !Number.isInteger(edadNumero) ||
+      edadNumero <= 0 ||
+      edadNumero > 100
+    ) {
+      await notificar(
+        'Edad no válida',
+        'Ingresa una edad válida entre 18 y 100 años.'
+      );
+
+      return;
+    }
+
+    if (edadNumero < 18) {
+      await notificar(
+        'Edad mínima requerida',
+        (
+          'Debes tener al menos 18 años para ' +
+          'registrarte en CoffeReg.'
+        )
       );
 
       return;
@@ -82,6 +113,7 @@ export default function RegistroScreen() {
           '/api/auth/registro',
           {
             nombre: nombre.trim(),
+            edad: edadNumero,
             username: username.trim(),
             password: password.trim(),
             rol,
@@ -164,6 +196,30 @@ export default function RegistroScreen() {
             value={nombre}
             onChangeText={setNombre}
           />
+
+          <Text style={styles.label}>
+            Edad
+          </Text>
+
+          <TextInput
+            style={styles.input}
+            placeholder="Ejemplo: 25"
+            placeholderTextColor="#bd8ea0"
+            value={edad}
+            onChangeText={(valor) =>
+              setEdad(
+                valor
+                  .replace(/\D/g, '')
+                  .slice(0, 3)
+              )
+            }
+            keyboardType="number-pad"
+            maxLength={3}
+          />
+
+          <Text style={styles.ayudaEdad}>
+            Debes tener entre 18 y 100 años.
+          </Text>
 
           <Text style={styles.label}>
             Nombre de usuario
@@ -337,6 +393,13 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     borderWidth: 1,
     borderColor: '#e8b9ca',
+    marginBottom: 15,
+  },
+
+  ayudaEdad: {
+    color: '#a45573',
+    fontSize: 12,
+    marginTop: -8,
     marginBottom: 15,
   },
 

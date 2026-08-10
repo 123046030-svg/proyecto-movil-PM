@@ -106,6 +106,12 @@ class Usuario(Base):
         nullable=False
     )
 
+    edad = Column(
+        Integer,
+        nullable=False,
+        default=18
+    )
+
     activo = Column(
         Boolean,
         default=True,

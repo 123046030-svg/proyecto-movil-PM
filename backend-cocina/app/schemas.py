@@ -151,13 +151,15 @@ class UsuarioCreateIn(BaseModel):
     nombre: str
     username: str
     password: str
-    role_ids: list[int] = []
+    edad: int
+    role_ids: list[int] = Field(default_factory=list)
 
 
 class UsuarioOut(BaseModel):
     id: int
     nombre: str
     username: str
+    edad: int
     activo: bool
     roles: list[str]
 
@@ -207,13 +209,7 @@ class LoginOut(BaseModel):
 class RegistroIn(BaseModel):
     nombre: str
 
-    # VALIDACIÓN DESDE FASTAPI
-    # No acepta menores de 18.
-    edad: int = Field(
-        ...,
-        ge=18,
-        le=100
-    )
+    edad: int
 
     username: str
     password: str

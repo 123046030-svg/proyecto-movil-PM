@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "CoffeReg",
-    "slug": "coffereg", 
+    "slug": "coffereg",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -12,6 +12,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.coffereg.app",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -28,17 +29,32 @@
     "plugins": [
       "expo-router",
       [
-  "expo-splash-screen",
-  {
-    "image": "./assets/images/splash-icon.png",
-    "imageWidth": 200,
-    "resizeMode": "contain",
-    "backgroundColor": "#fff1f6",
-    "dark": {
-      "backgroundColor": "#5a2b3c"
-    }
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#fff1f6",
+          "dark": {
+            "backgroundColor": "#5a2b3c"
+          }
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "09577586-a41b-4693-b75b-f784d539ded7"
+      }
+    },
+    "owner": "rcortesv"
   }
-]
-]
-}
 }

@@ -107,6 +107,7 @@ def insertar_datos_iniciales():
                 nombre="Regina",
                 username="admin",
                 password="123456",
+                edad=21,
                 activo=True,
                 roles=[roles["Administrador"]]
             )
@@ -116,6 +117,9 @@ def insertar_datos_iniciales():
             admin.password = "123456"
             admin.activo = True
             admin.roles = [roles["Administrador"]]
+            
+            if admin.edad is None:
+                admin.edad = 21
 
         db.commit()
 

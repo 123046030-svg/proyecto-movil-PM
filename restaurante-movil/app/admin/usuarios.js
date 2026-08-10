@@ -215,6 +215,13 @@ export default function UsuariosScreen() {
               Usuario: {item.username}
             </Text>
 
+            <Text style={styles.dato}>
+              Edad:{' '}
+              {Number.isInteger(item.edad)
+                ? `${item.edad} años`
+                : 'No disponible'}
+            </Text>
+
             <View
               style={styles.estadoContainer}
             >

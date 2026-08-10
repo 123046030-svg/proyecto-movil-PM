@@ -199,6 +199,13 @@ def registrar_usuario(
     # VALIDACIÓN DE EDAD
     # ======================================================
 
+    if data.edad <= 0 or data.edad > 100:
+        raise HTTPException(
+            status_code=400,
+            detail="Ingresa una edad válida"
+        )
+
+
     if data.edad < 18:
         raise HTTPException(
             status_code=400,
@@ -206,15 +213,6 @@ def registrar_usuario(
                 "Debes tener al menos "
                 "18 años para registrarte "
                 "en CoffeReg"
-            )
-        )
-
-
-    if data.edad > 100:
-        raise HTTPException(
-            status_code=400,
-            detail=(
-                "Ingresa una edad válida"
             )
         )
 
@@ -322,6 +320,7 @@ def registrar_usuario(
         nombre=nombre,
         username=username,
         password=password,
+        edad=data.edad,
         activo=True,
         roles=[rol]
     )
